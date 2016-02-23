@@ -39,7 +39,7 @@ Template.jsoninspector.rendered = function() {
 
       // Initialize the editor
       var editor = new JSONEditor(document.getElementById('editor_holder'),{
-      theme: 'bootstrap3',
+      theme: 'foundation5',
       iconlib: 'fontawesome4',
         // Enable fetching schemas via ajax
         ajax: true,
@@ -148,4 +148,7 @@ Template.jsoninspector.rendered = function() {
         }
       })
   })
+
+
+  $('#main .panel div.form-control').removeClass('form-control');
 }

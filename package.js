@@ -14,7 +14,7 @@ Package.onUse(function (api) {
   api.use("deps");
 
   // reaction core
-  api.use("reactioncommerce:core@0.10.0");
+  api.use("reactioncommerce:core@0.12.0");
 
   // making basic sip form work
   api.use("reactive-var");
@@ -55,8 +55,10 @@ Package.onUse(function (api) {
   api.addFiles("client/secondinfo.js", "client")
   api.addFiles("client/sipCartCheckout.html", "client")
   api.addFiles("client/sipCartCheckout.js", "client")
+
   api.addFiles("client/template-overrides.js", "client")
-  api.addFiles("common/router.js", ["client", "server"])
+
+//  api.addFiles("common/router.js", ["client", "server"])
   api.addFiles("server/sipserver.js", "server")
 
   // call center

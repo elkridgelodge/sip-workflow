@@ -110,9 +110,11 @@ Template.jsoninspector.rendered = function() {
         editor.setValue([ReactionCore.Collections.Cart.findOne({userId: Session.get("current_assisted_cart")})]);
       });
 
+/*
       $(".cartstatus").click(function() {
         editor.setValue([ReactionCore.Collections.Cart.findOne({userId: this.id})])
       })
+*/
 
       // Hook up the enable/disable button
       document.getElementById('enable_disable').addEventListener('click',function() {

@@ -1,71 +1,106 @@
 <template name="admin">
-  <span class="layout-alerts-global">{{>bootstrapAlerts}}</span>
+  <span class="layout-alerts-global">{{> inlineAlerts}}</span>
   <div class="page {{adminControlsClassname}}" id="reactionAppContainer">
-    <nav class="reaction-navigation-header">{{> yield region="layoutHeader"}}</nav>
-    <nav class="reaction-cart-drawer">{{>cartDrawer}}</nav>
-    <div class="reaction-dashboard-drawer">{{> yield region="dashboard"}}</div>
+    <nav class="reaction-navigation-header">
+      <!-- begin layoutHeader -->
+      {{> Template.dynamic template=layoutHeader}}
+      <!-- end layoutHeader -->
+    </nav>
+
+    <nav class="reaction-cart-drawer">
+      {{> cartDrawer}}
+    </nav>
+
     <main role="main" id="main">
       {{> callcenterdashboard}}
-      {{> dashboardHeader}}
-      {{> yield}}
+      <!-- begin dashboardHeader -->
+      {{> Template.dynamic template=dashboardHeader}}
+      <!-- end dashboardHeader -->
+
+      <!-- begin template region -->
+      {{> Template.dynamic template=template}}
+      <!-- end template region -->
+
+      <footer class="reaction-navigation-footer footer-default">
+        <!-- begin layoutFooter -->
+        {{> Template.dynamic template=layoutFooter}}
+        <!-- end layoutFooter -->
+      </footer>
     </main>
-    <footer class="reaction-navigation-footer footer-default">{{>yield region="layoutFooter"}}</footer>
   </div>
 
-
   <div class="admin-controls {{adminControlsClassname}}">
-      <div class="admin-controls-detail">
-        <div class="admin-controls-heading">
-          {{> settingsHeader}}
-        </div>
-        <div class="admin-controls-content action-view-body">
-          {{> Template.dynamic template=template.template data=template.data}}
-        </div>
-        <div class="admin-controls-footer">
-          <div class="admin-controls-container">
-            {{>yield region="adminControlsFooter"}}
-          </div>
+    <div class="admin-controls-detail">
+      <div class="admin-controls-heading">
+        {{> settingsHeader}}
+      </div>
+      <div class="admin-controls-content action-view-body">
+        <!-- begin admin controls -->
+        {{> Template.dynamic template=control.template data=control.data}}
+        <!-- end aadmin controls-->
+      </div>
+      <div class="admin-controls-footer">
+        <div class="admin-controls-container">
+          <!-- begin adminControlsFooter -->
+          {{> Template.dynamic template=adminControlsFooter}}
+          <!-- end adminControlsFooter -->
         </div>
       </div>
-
-
+    </div>
   </div>
 
   <div class="admin-controls-menu">
+
     <nav class="admin-controls-quicklinks">
-      <!-- <a href="/dashboard" class="primary">
-        <img src="/resources/reaction-logo.svg" width="32">
-        <span>Dashboard</span>
-      </a> -->
-      {{#each reactionApps provides='shortcut' enabled=true}}
-        {{#if hasPermission route}}
-          <button id="{{route}}" title="{{label}}">
-            {{#if isDashboard route}}
-              <img src="/resources/reaction-logo.svg" width="32">
-            {{else}}
+      <!-- begin provides shortcut -->
+      {{#each reactionApps provides='shortcut' enabled=true container=undefined}}
+        <a href="{{route}}" title="{{i18n i18nKeyLabel label}}" class="btn btn-default {{active name}}">
+          <div class="contents">
+            <div class="icon">
               <i class="{{icon}}"></i>
-            {{/if}}
-            <span class="icon-text">
+            </div>
+            <div class="icon-text" data-i18n="{{i18nKeyLabel}}">
               {{label}}
-            </span>
-          </button>
-        {{/if}}
+            </div>
+          </div>
+        </a>
       {{/each}}
+      <!-- end provides shortcut -->
+      <button data-event-action="addItem">
+        <div class="icon">
+          <i class="fa fa-plus"></i>
+        </div>
+        <span class="icon-text">
+          Add
+        </span>
+      </button>
+      <button data-event-action="toggleEditMode">
+        <div class="icon">
+          <i class="fa fa-gear"></i>
+        </div>
+        <span class="icon-text" data-i18n="app.editMode">
+          Edit Mode
+        </span>
+      </button>
     </nav>
+
     <nav>
-      {{> yield "dashboardControls"}}
+      <!-- begin dashboardControls -->
+      {{> Template.dynamic template=dashboardControls}}
+      <!-- end dashboardControls -->
 
       {{#if settings}}
         {{#with settings}}
-          <button id="{{route}}" title="{{label}}" data-event-action="showPackageSettings">
+          <button id="{{route}}" title="{{i18n i18nKeyLabel label}}" data-event-action="showPackageSettings">
             <i class="fa fa-gear"></i>
-            <span class="icon-text">
+            <span class="icon-text" data-i18n="{{i18nKeyLabel}}">
               {{label}}
             </span>
           </button>
         {{/with}}
       {{/if}}
     </nav>
+
   </div>
 
 </template>

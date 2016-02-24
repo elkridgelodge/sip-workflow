@@ -68,5 +68,5 @@ Package.onUse(function (api) {
   api.addFiles("client/admin/callcenter/callcenterdashboard.js", "client")
   api.addFiles("client/admin/callcenter/callcenteridle.js", "client")
   api.addFiles("server/pubperm.js", "server")
-  api.addFiles("client/main.scss", "client")
+//  api.addFiles("client/main.scss", "client")
 });

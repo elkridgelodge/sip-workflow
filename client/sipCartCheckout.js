@@ -2,28 +2,24 @@
 // cartCheckout is a wrapper template
 // controlling the load order of checkout step templates
 //
-//
-// If you are looking for:
-//  - cartWorkflow
-//  - cartWorkflowPosition
-//  - cartWorkflowCompleted
-// see helpers/cart.coffee
-//
+
 
 Template.sipCartCheckout.helpers({
   cart: function () {
-    return ReactionCore.Collections.Cart.findOne();
+    if (ReactionCore.Subscriptions.Cart.ready()) {
+      return ReactionCore.Collections.Cart.findOne();
+    }
   }
 });
 
-Template.sipCartCheckout.onRendered(function () {
-  // ensure checkout drawer does not display
-  Session.set("displayCartDrawer", false);
-  // init cart workflow
-  if (ReactionCore.Collections.Cart.findOne().workflow.status === "new") {
-    // if user logged in as normal user, we must pass it through the first stage
-    Meteor.call("workflow/pushCartWorkflow", "sipCartWorkflow",
-      "sipCartCheckout");
+
+Template.sipCartCheckout.onCreated(function () {
+  if (ReactionCore.Subscriptions.Cart.ready()) {
+    const cart = ReactionCore.Collections.Cart.findOne();
+    if (cart.workflow && cart.workflow.status === "new") {
+        // if user logged in as normal user, we must pass it through the first stage
+      Meteor.call("workflow/pushCartWorkflow", "sipCartWorkflow", "sipCheckoutLogin", cart._id);
+    }
   }
 });
 
@@ -31,7 +27,6 @@ Template.sipCartCheckout.onRendered(function () {
  * checkoutSteps Helpers
  * helper isPending evaluates that this is
  * the current step, or has been processed already
- *
  */
 Template.sipCheckoutSteps.helpers({
   isCompleted: function () {
@@ -49,3 +44,18 @@ Template.sipCheckoutSteps.helpers({
   }
 });
 
+/**
+ * checkoutStepBadge Helpers
+ */
+/*
+Template.checkoutStepBadge.helpers({
+  checkoutStepBadgeClass: function () {
+    const workflowStep = Template.instance().data;
+    // let currentStatus = ReactionCore.Collections.Cart.findOne().workflow.status;
+    if (workflowStep.status === true || workflowStep.status === this.template) {
+      return "active";
+    }
+    return "";
+  }
+});
+*/

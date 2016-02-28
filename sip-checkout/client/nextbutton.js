@@ -28,11 +28,18 @@ Template.nextbutton.events({
 
     Session.set("infocollectstage", 2)
 
+    var userid = Meteor.userId()
+    var cartid = ReactionCore.Collections.Cart.findOne({userId: userid})._id
+
     Meteor.call("sip-workflow/setBilling", cartid)
 
     Meteor.call("workflow/pushCartWorkflow", "sipCartWorkflow",
       "secondinfo");
 
+    Meteor.call("workflow/pushCartWorkflow", "sipCartWorkflow", "checkoutReview")
+//    Meteor.call("workflow/pushCartWorkflow", "sipCartWorkflow", "checkoutReview")
+
+//    Meteor.call("workflow/pushCartWorkflow", "sipCartWorkflow", "checkoutPayment")
 
   },
 

@@ -52,9 +52,13 @@ console.log(r)
           instance.didnumber.set(r.content)
 instance.didnumber.set(r)
           Session.set("didnumber", r)
+    Meteor.call("workflow/pushCartWorkflow", "sipCartWorkflow", "checkoutReview")
+
         } else {
           console.log(e)
           Session.set("didnumber", "server error")
+    Meteor.call("workflow/pushCartWorkflow", "sipCartWorkflow", "checkoutReview")
+
         }
       })
 

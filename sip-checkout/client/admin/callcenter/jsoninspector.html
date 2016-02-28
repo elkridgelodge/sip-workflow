@@ -1,0 +1,29 @@
+<template name="jsoninspector">
+{{> userstatuslist}}
+    <div class='row'>
+      <div id='editor_holder' class='medium-12 columns'></div>
+    </div>
+    <div class='row'>
+      <div class='medium-12-columns'>
+        <button id='submit' class='tiny'>Submit (console.log)</button>
+        <button id='restore' class='secondary tiny'>Restore to Default</button>
+        <button id='enable_disable' class='secondary tiny'>Disable/Enable Form</button>
+        <span id='valid_indicator' class='label'></span>
+      </div>
+    </div>
+<!-- {{initFoundation}} -->
+</template>
+
+<template name="userstatuslist">
+<ul>
+{{#each activeusers}}
+<span style="font-size: 2em; color: green;"><li>active: {{phoneid}}</li></span>
+<div class="sipCallcenterCart">
+</div>
+{{/each}}
+{{#each idleusers}}
+<span style="font-size: 2em; color: yellow;"><li>idle: {{phoneid}}</li></span>
+{{/each}}
+</ul>
+{{initFoundation}}
+</template>
